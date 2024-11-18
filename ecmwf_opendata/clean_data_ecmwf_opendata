@@ -1,0 +1,6 @@
+#!/bin/sh
+cleaner -maxfiles 4 '_ecmwf_.*_surface.sqd' /smartmet/data/ecmwf_opendata
+cleaner -maxfiles 4 '_ecmwf_.*_pressure.sqd' /smartmet/data/ecmwf_opendata
+cleaner -maxfiles 4 '_ecmwf_.*_surface.sqd' /smartmet/editor/in
+cleaner -maxfiles 4 '_ecmwf_.*_pressure.sqd' /smartmet/editor/in
+find /smartmet/data/incoming/ecmwf_opendata -type f -mmin +1440 -delete

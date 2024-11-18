@@ -1,0 +1,4 @@
+#!/bin/sh
+cleaner -maxfiles 4 '_local_obs.sqd' /smartmet/editor/in
+cleaner -maxfiles 4 '_local_obs.sqd' /smartmet/data/local_obs
+cleaner -maxage 144 '.csv' /smartmet/data/incoming/local_obs

@@ -1,0 +1,3 @@
+#2023-12-18 / Janne Kauhanen / FMI
+#Process local weather stations
+*/10 * * * * /smartmet/run/data/local_obs/bin/do_local_obs.sh > /smartmet/logs/data/local_obs.log
