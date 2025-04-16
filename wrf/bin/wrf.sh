@@ -8,7 +8,7 @@
 
 #. /smartmet/cnf/data/wrf.cnf
 
-AREA=rwanda
+AREA=uzbekistan
 DOMAIN=d02
 OUT=/smartmet/data/wrf/$AREA
 CNF=/smartmet/run/data/wrf/cnf
@@ -28,14 +28,14 @@ if [ $DOMAIN = d01 ]
 then
   PRODUCER=61
   DOMAINNAME=large
-else 
+else
   PRODUCER=60
   DOMAINNAME=small
 fi
 
 #UTCHOUR=$(date -u +%H -d '-3 hours')
 UTCHOUR=$(date -u +%H)
-DATE=$(date -u +%Y%m%d${RUN} -d '-9 hours')
+DATE=$(date -u +%Y%m%d${RUN} -d '-5 hours')
 #DATE=2024091812
 #DATE=$(date -u +%Y%m%d${RUN}00)
 #FILEDATE=$(date -u +%y%m%d${RUN}00 -d '-3 hours')
@@ -87,23 +87,10 @@ gribtoqd -d -c $CNF/wrf_surface.cnf -n -t -L 1 -p "${PRODUCER},WRF Surface" -o $
 gribtoqd -d -c $CNF/wrf_pressure.cnf -n -t -L 100 -p "${PRODUCER},WRF Pressure" -o $TMP/${OUTNAME}.sqd $TMP/grib/
 echo "done"
 
-echo "Analysis time: $DATE"
-echo "Model Run: $RUN"
-
-echo "Converting grib files to qd files..."
-#gribtoqd -n -t -L 1,2,10,100,101,103,105,200 -p "${PRODUCER},WRF Surface,WRF Pressure" -o $TMP/${OUTNAME}.sqd $TMP/grib/
-#gribtoqd -n -t -L 1,100 -p "${PRODUCER},WRF Surface,WRF Pressure" -o $TMP/${OUTNAME}.sqd $TMP/grib/
-# Surface parameters
-gribtoqd -d -c $CNF/wrf_surface.cnf -n -t -L 1 -p "${PRODUCER},WRF Surface" -o $TMP/${OUTNAME}.sqd $TMP/grib/
-# Pressure levels
-gribtoqd -d -c $CNF/wrf_pressure.cnf -n -t -L 100 -p "${PRODUCER},WRF Pressure" -o $TMP/${OUTNAME}.sqd $TMP/grib/
-echo "done"
-
 
 # Postproces surface
-qdscript -a 1,353 -i $TMP/${OUTNAME}.sqd_levelType_1 $CNF/wrf_surface.st > $TMP/${OUTNAME}.sqd_levelType_1_tmp
-qdset -n "Pressure Reduced To MSL (prmsl)" $TMP/${OUTNAME}.sqd_levelType_1_tmp 1
-qdset -n "Precipitation mm/h" $TMP/${OUTNAME}.sqd_levelType_1_tmp 353
+qdscript -a 353 -i $TMP/${OUTNAME}.sqd_levelType_1 $CNF/wrf_surface.st > $TMP/${OUTNAME}.sqd_levelType_1_tmp
+#qdset -n "Precipitation (mm/h)" $TMP/${OUTNAME}.sqd_levelType_1_tmp 353
 
 
 # Takin the surface and pressure data
@@ -164,4 +151,5 @@ fi
 rm -rf $TMP
 
 echo $(date)
+~
 
