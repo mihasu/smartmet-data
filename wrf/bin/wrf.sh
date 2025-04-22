@@ -82,15 +82,15 @@ echo "Converting grib files to qd files..."
 #gribtoqd -n -t -L 1,2,10,100,101,103,105,200 -p "${PRODUCER},WRF Surface,WRF Pressure" -o $TMP/${OUTNAME}.sqd $TMP/grib/
 #gribtoqd -n -t -L 1,100 -p "${PRODUCER},WRF Surface,WRF Pressure" -o $TMP/${OUTNAME}.sqd $TMP/grib/
 # Surface parameters
-gribtoqd -d -c $CNF/wrf_surface.cnf -n -t -L 1 -p "${PRODUCER},WRF Surface" -o $TMP/${OUTNAME}.sqd $TMP/grib/
+gribtoqd -d -c $CNF/wrf-gribtoqd.cnf -n -t -L 1 -p "${PRODUCER},WRF Surface" -o $TMP/${OUTNAME}.sqd $TMP/grib/
 # Pressure levels
-gribtoqd -d -c $CNF/wrf_pressure.cnf -n -t -L 100 -p "${PRODUCER},WRF Pressure" -o $TMP/${OUTNAME}.sqd $TMP/grib/
+gribtoqd -d -c $CNF/wrf-gribtoqd.cnf -n -t -L 100 -p "${PRODUCER},WRF Pressure" -o $TMP/${OUTNAME}.sqd $TMP/grib/
 echo "done"
 
 
 # Postproces surface
-qdscript -a 353 -i $TMP/${OUTNAME}.sqd_levelType_1 $CNF/wrf_surface.st > $TMP/${OUTNAME}.sqd_levelType_1_tmp
-#qdset -n "Precipitation (mm/h)" $TMP/${OUTNAME}.sqd_levelType_1_tmp 353
+qdscript -a 353 -i $TMP/${OUTNAME}.sqd_levelType_1 $CNF/st.surface.d/rr1h-353.st > $TMP/${OUTNAME}.sqd_levelType_1_tmp
+qdset -n "Precipitation (mm/h)" $TMP/${OUTNAME}.sqd_levelType_1_tmp 353
 
 
 # Takin the surface and pressure data
