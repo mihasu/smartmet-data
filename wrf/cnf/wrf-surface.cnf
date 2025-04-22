@@ -39,10 +39,8 @@
 # 48: Convective Precipitation (water) [kg m**-2]
 3063;48;Convective Precipitation (water) (acpcp);0;1
 
-# Changed to 353 to make WeatherAndCloudines work
 # 50: Total Precipitation [kg m**-2]
 228228;50;Total Precipitation (tp);0;1
-#228228;353;Precipitation;0;1
 
 # 51: Snow Depth [m]
 3066;51;Snow Depth (sde);0;1

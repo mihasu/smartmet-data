@@ -1,0 +1,10 @@
+MODEL=wrf
+MODEL_ID=61
+MODEL_RAW_ROOT='/smartmet/data/incoming/wrf/d01'
+MODEL_RAW_DIR='/$RT_DATE_HH'
+MODEL_RAW_SFC='\*'
+MODEL_RAW_PL='\*'
+
+MODEL_RAW_MASK='\*WRFPRS_d01\*'
+
+AREA=large
