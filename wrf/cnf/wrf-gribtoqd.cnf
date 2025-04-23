@@ -36,11 +36,11 @@
 # 13: Relative Humidity [%]
 157;13;Relative Humidity (r);0;1
 
+# 13: Relative Humidity [%]
+157;13;Relative Humidity (r);0;1;200;0
+
 # 17: Orography [m]
 228002;17;Orography (orog);0;1
-
-# 21: 10 Metre Wind Speed [m s**-1]
-207;21;10 Metre Wind Speed (10si);0;1;105;10
 
 # 23: 10 Metre U Wind Component [m s**-1]
 165;23;10 Metre U Wind Component (10u);0;1;105;10
@@ -53,6 +53,10 @@
 
 # 24: V Component Of Wind [m s**-1]
 132;24;V Component Of Wind (v);0;1
+
+# 43: Vertical Velocity [m s**-1]
+2009;43;Vertical Velocity (w);0;1000
+260238;43;Vertical Velocity (w);0;1000
 
 # 47: Precipitable Water [kg m**-2]
 3054;47;Precipitable Water (pwat);0;1;200;0
@@ -78,9 +82,6 @@
 # 79: Total Cloud Cover [%]
 228164;79;Total Cloud Cover (tcc);0;1;200;0
 
-# 140: Vertical Velocity [Pa s**-1]
-#135;140;Vertical Velocity (w);0;1
-
 # 273: Low Cloud Cover [%]
 3073;273;Low Cloud Cover (lcc);0;1;214;0
 
@@ -99,6 +100,9 @@
 # 286: Volumetric Soil Moisture Content [Proportion]
 260185;286;Volumetric Soil Moisture Content (soilw);0;1;112;0
 
+# 354: Precipitation Rate [kg m**-2 s**-1]
+3059;354;Precipitation Rate (prate);0;10800
+
 # 407: Visibility [m]
 3020;407;Visibility (vis);0;1
 
@@ -110,4 +114,3 @@
 
 # 532: Sea Ice Area Fraction [(0 - 1)]
 31;532;Sea Ice Area Fraction (ci);0;1
-

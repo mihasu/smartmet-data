@@ -8,7 +8,7 @@
 
 #. /smartmet/cnf/data/wrf.cnf
 
-AREA=uzbekistan
+AREA=contry
 DOMAIN=d02
 OUT=/smartmet/data/wrf/$AREA
 CNF=/smartmet/run/data/wrf/cnf
@@ -35,7 +35,7 @@ fi
 
 #UTCHOUR=$(date -u +%H -d '-3 hours')
 UTCHOUR=$(date -u +%H)
-DATE=$(date -u +%Y%m%d${RUN} -d '-5 hours')
+DATE=$(date -u +%Y%m%d${RUN} -d '-7 hours')
 #DATE=2024091812
 #DATE=$(date -u +%Y%m%d${RUN}00)
 #FILEDATE=$(date -u +%y%m%d${RUN}00 -d '-3 hours')
@@ -60,10 +60,7 @@ if [ -e $OUT/surface/querydata/${OUTNAME}_surface.sqd ]; then
 fi
 
 mkdir -p $TMP/grib
-
 cd $TMP/grib
-
-mkdir -p /smartmet/data/incoming/wrf/${DOMAIN}/${DATE}
 
 echo "Moving files from incoming...."
 #mv /smartmet/data/incoming/wrf/${DOMAIN}/${FILEDATE}*${DOMAIN}.grb2* .
@@ -88,21 +85,20 @@ gribtoqd -d -c $CNF/wrf-gribtoqd.cnf -n -t -L 100 -p "${PRODUCER},WRF Pressure" 
 echo "done"
 
 
-# Postproces surface
-qdscript -a 353 -i $TMP/${OUTNAME}.sqd_levelType_1 $CNF/st.surface.d/rr1h-353.st > $TMP/${OUTNAME}.sqd_levelType_1_tmp
+# Postprocess precipitation mm/h
+qdscript -a 353 $CNF/st.surface.d/rr1h-353.st < $TMP/${OUTNAME}.sqd_levelType_1 > $TMP/${OUTNAME}.sqd_levelType_1_tmp
 qdset -n "Precipitation (mm/h)" $TMP/${OUTNAME}.sqd_levelType_1_tmp 353
 
-
-# Takin the surface and pressure data
+# Taking the surface and pressure data
 mv -f $TMP/$OUTNAME.sqd_levelType_1_tmp $TMP/${OUTNAME}_surface.sqd.tmp
 mv -f $TMP/$OUTNAME.sqd_levelType_100 $TMP/${OUTNAME}_pressure.sqd.tmp
 
-#
 # Create querydata totalWind and WeatherAndCloudiness objects
-#echo -n "Creating Wind objects:..."
-qdversionchange -a 7 < $TMP/${OUTNAME}_surface.sqd.tmp > $TMP/${OUTNAME}_surface.sqd
-echo "done"
+echo "Creating Wind and Weather objects:"
 qdversionchange -w 0 7 < $TMP/${OUTNAME}_pressure.sqd.tmp > $TMP/${OUTNAME}_pressure.sqd
+qdversionchange -a -w 1 7 < $TMP/${OUTNAME}_surface.sqd.tmp > $TMP/${OUTNAME}_surface.sqd
+echo "done"
+
 
 # Crop unnecessary parameters
 #echo -n "Cropping parameters..."
